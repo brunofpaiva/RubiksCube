@@ -71,6 +71,13 @@ public class Main {
 		System.out.println("======");
 		System.out.println(cube.toString());
 		System.out.println("======");
+		
+		Solver me = new Solver(cube);
+		me.solveCube();
+		
+//		System.out.println("======");
+//		System.out.println(cube.toString());
+//		System.out.println("======");
 	}
 
 }
