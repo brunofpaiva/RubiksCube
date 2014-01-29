@@ -404,6 +404,60 @@ public class RubikCube {
 		face.getMatrix()[1][0] = aux01;
 	}
 	
+	public boolean equals(RubikCube cube){
+		boolean answer = true;
+		
+		//Comparing Green Side
+		for (int i = 0; i < 2; i++){
+			for (int j = 0; j < 2; j++){
+				if (!this.getGreenSide().getMatrix()[i][j].equals(cube.getGreenSide().getMatrix()[i][j]))
+					return false;
+			}
+		}
+		
+		//Comparing Blue Side
+		for (int i = 0; i < 2; i++){
+			for (int j = 0; j < 2; j++){
+				if (!this.getBlueSide().getMatrix()[i][j].equals(cube.getBlueSide().getMatrix()[i][j]))
+					return false;
+			}
+		}
+		
+		//Comparing Red Side
+		for (int i = 0; i < 2; i++){
+			for (int j = 0; j < 2; j++){
+				if (!this.getRedSide().getMatrix()[i][j].equals(cube.getRedSide().getMatrix()[i][j]))
+					return false;
+			}
+		}
+		
+		//Comparing Orange Side
+		for (int i = 0; i < 2; i++){
+			for (int j = 0; j < 2; j++){
+				if (!this.getOrangeSide().getMatrix()[i][j].equals(cube.getOrangeSide().getMatrix()[i][j]))
+					return false;
+			}
+		}
+		
+		//Comparing Yellow Side
+		for (int i = 0; i < 2; i++){
+			for (int j = 0; j < 2; j++){
+				if (!this.getYellowSide().getMatrix()[i][j].equals(cube.getYellowSide().getMatrix()[i][j]))
+					return false;
+			}
+		}
+		
+		//Comparing White Side
+		for (int i = 0; i < 2; i++){
+			for (int j = 0; j < 2; j++){
+				if (!this.getWhiteSide().getMatrix()[i][j].equals(cube.getWhiteSide().getMatrix()[i][j]))
+					return false;
+			}
+		}
+		
+		return answer;
+	}
+	
 	public String toString(){
 		String output = "";
 		
