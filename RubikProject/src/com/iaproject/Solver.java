@@ -16,31 +16,19 @@ public class Solver {
 		this.solution = "";
 		this.impossibleMove = Move.NoMove;
 		this.possibleMoves = new ArrayList<Move>();
-		
-		possibleMoves.add(Move.R);
-		possibleMoves.add(Move.L);
-		possibleMoves.add(Move.U);
-		possibleMoves.add(Move.D);
-		possibleMoves.add(Move.F);
-		possibleMoves.add(Move.B);
-		possibleMoves.add(Move.Rinv);
-		possibleMoves.add(Move.Linv);
-		possibleMoves.add(Move.Uinv);
-		possibleMoves.add(Move.Dinv);
-		possibleMoves.add(Move.Finv);
-		possibleMoves.add(Move.Binv);
+		fillPossibleMoves();		
 
-//		this.cubeCopy = Utils.shuffleCube("B R2 U2 D L2 F' R' L' F2 D U2 F U B U2 D' F' R D R' F2 R' F L' U"); INFINITO!
-//		this.cubeCopy = Utils.shuffleCube("U2 F U' L' U B L' R' B2 U' L2 U' B' L R2 D U' L' B' R' D F L2 F' B2"); OK 5 moves
-//		this.cubeCopy = Utils.shuffleCube("F B U L' R' U' D L2 D' R L' U' D2 F' U' L2 D' L R B2 L D' B' L' D'"); OK 8 moves
-		this.cubeCopy = Utils.shuffleCube("L2 U2 L2 R2 B' L2 F L2 R2 D' L U R' D L' U' L2 D' U L' B2 U F' D U'");// OK 9 moves (poderia ter feito D' ao invés de D D D) DONE!!!
-//		this.cubeCopy = Utils.shuffleCube("D2 F U D2 R L U' B' R2 L B L' B L R2 D2 B' U' F' U L' D2 B' R D'"); OK 8 moves
-//		this.cubeCopy = Utils.shuffleCube("U2 D' F B' R' L U R2 B' D2 F' L U2 R2 L' D' B' D' U2 B' L' F D L' D'"); OK 9 moves
-//		this.cubeCopy = Utils.shuffleCube("D F L' U' R B2 R2 U' R D' U' L F' U2 F' R' B D2 U' B' D U F2 R2 F2"); OK 8 moves
-//		this.cubeCopy = Utils.shuffleCube("L2 R2 B R L2 F2 B' U' L' D2 U B L2 R U D2 L2 B2 D L2 D R' U F' R2"); INFINITO!
-//		this.cubeCopy = Utils.shuffleCube("F' B2 L' U D' R' D2 U2 R F R L F B2 U2 L' B L' U F R2 D R' U' R2"); OK 6 moves
-//		this.cubeCopy = Utils.shuffleCube("F' L R' F L U2 D' B' R U2 R2 B2 L' U2 F R2 L2 B L D R2 L' U2 R2 D"); OK 6 moves (poderia ter feito D' ao invés de D D D)
-//		this.cubeCopy = Utils.shuffleCube("F' L R' F L U2 D' B' R U2 R2 B2 L' U2 F R2 L2 B L D R2 L' U2 R2 D");
+		this.cubeCopy = Utils.shuffleCube("B R2 U2 D L2 F' R' L' F2 D U2 F U B U2 D' F' R D R' F2 R' F L' U");// INFINITO!// OK 4 moves
+//		this.cubeCopy = Utils.shuffleCube("U2 F U' L' U B L' R' B2 U' L2 U' B' L R2 D U' L' B' R' D F L2 F' B2");// OK 5 moves
+//		this.cubeCopy = Utils.shuffleCube("F B U L' R' U' D L2 D' R L' U' D2 F' U' L2 D' L R B2 L D' B' L' D'");// OK 8 moves
+//		this.cubeCopy = Utils.shuffleCube("L2 U2 L2 R2 B' L2 F L2 R2 D' L U R' D L' U' L2 D' U L' B2 U F' D U'");// OK 9 moves (poderia ter feito D' ao invés de D D D) DONE!!!
+//		this.cubeCopy = Utils.shuffleCube("D2 F U D2 R L U' B' R2 L B L' B L R2 D2 B' U' F' U L' D2 B' R D'");// OK 8 moves
+//		this.cubeCopy = Utils.shuffleCube("U2 D' F B' R' L U R2 B' D2 F' L U2 R2 L' D' B' D' U2 B' L' F D L' D'");// OK 9 moves
+//		this.cubeCopy = Utils.shuffleCube("D F L' U' R B2 R2 U' R D' U' L F' U2 F' R' B D2 U' B' D U F2 R2 F2");// OK 8 moves
+//		this.cubeCopy = Utils.shuffleCube("L2 R2 B R L2 F2 B' U' L' D2 U B L2 R U D2 L2 B2 D L2 D R' U F' R2");// INFINITO! OK 5 moves
+//		this.cubeCopy = Utils.shuffleCube("F' B2 L' U D' R' D2 U2 R F R L F B2 U2 L' B L' U F R2 D R' U' R2");// OK 6 moves BUGADO! (poderia ter feito D' ao invés de D D D)
+//		this.cubeCopy = Utils.shuffleCube("F' L R' F L U2 D' B' R U2 R2 B2 L' U2 F R2 L2 B L D R2 L' U2 R2 D");// OK 6 moves
+//		this.cubeCopy = Utils.shuffleCube("");//
 		
 	}
 	
@@ -59,6 +47,7 @@ public class Solver {
 	
 	public void solveCross(){
 		int count = 0;
+		int crossSideMoves = 0;
 		Move nextMove = Move.NoMove;
 		
 		while (!isCrossComplete() && count < 12){
@@ -66,7 +55,7 @@ public class Solver {
 				System.out.println(m);
 			}
 			
-			nextMove = verifyNextMove();
+			nextMove = verifyNextCrossMove();
 			if (impossibleMove != Move.NoMove)
 				possibleMoves.add(impossibleMove);
 			
@@ -151,15 +140,46 @@ public class Solver {
 			System.out.println("====== ==== ======");
 			System.out.println("count: " + count);
 		}
+		
+		prepareCrossSidesPossibleMoves();
+		
+		while (! isCrossSidesComplete() && crossSideMoves < 4){
+			
+			nextMove = verifyNextCrossSideMove();
+			if (impossibleMove != Move.NoMove)
+				possibleMoves.add(impossibleMove);
+			
+			switch (nextMove){
+				case Dinv: solution += "D' ";
+						possibleMoves.remove(Move.D);
+						impossibleMove = Move.D;
+						break;
+				case D: solution += "D ";
+						possibleMoves.remove(Move.Dinv);
+						impossibleMove = Move.Dinv;
+						break;
+				case NoCrossMove: 
+					System.out.println("DONE!");
+					break;
+			default:
+				break;
+			}		
+			crossSideMoves++;
+			System.out.println("====== COPY ======");
+			System.out.println(cubeCopy.toString());
+			System.out.println("====== ==== ======");
+			System.out.println("count: " + count);
+			System.out.println("count Side: " + crossSideMoves);
+		}
 	}
-	
-	private Move verifyNextMove(){
+
+	private Move verifyNextCrossMove(){
 		for (Move m : possibleMoves){
 			
 			if (m == Move.R && m != impossibleMove){
 				System.out.println("MOVE - R");
 				cubeCopy.right(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.right(this.cube.getGreenSide());
 					return Move.R;
@@ -171,7 +191,7 @@ public class Solver {
 			if (m == Move.L && m != impossibleMove){
 				System.out.println("MOVE - L");
 				cubeCopy.left(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.left(this.cube.getGreenSide());
 					return Move.L;
@@ -183,7 +203,7 @@ public class Solver {
 			if (m == Move.U && m != impossibleMove){
 				System.out.println("MOVE - U");
 				cubeCopy.up(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.up(this.cube.getGreenSide());
 					return Move.U;
@@ -195,7 +215,7 @@ public class Solver {
 			if (m == Move.D && m != impossibleMove){
 				System.out.println("MOVE - D");
 				cubeCopy.down(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.down(this.cube.getGreenSide());
 					return Move.D;
@@ -207,7 +227,7 @@ public class Solver {
 			if (m == Move.F && m != impossibleMove){
 				System.out.println("MOVE - F");
 				cubeCopy.front(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.front(this.cube.getGreenSide());
 					return Move.F;
@@ -219,7 +239,7 @@ public class Solver {
 			if (m == Move.B && m != impossibleMove){
 				System.out.println("MOVE - B");
 				cubeCopy.back(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.back(this.cube.getGreenSide());
 					return Move.B;
@@ -231,7 +251,7 @@ public class Solver {
 			if (m == Move.Rinv && m != impossibleMove){
 				System.out.println("MOVE - R'");
 				cubeCopy.rightInv(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.rightInv(this.cube.getGreenSide());
 					return Move.Rinv;
@@ -243,7 +263,7 @@ public class Solver {
 			if (m == Move.Linv && m != impossibleMove){
 				System.out.println("MOVE - L'");
 				cubeCopy.leftInv(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.leftInv(this.cube.getGreenSide());
 					return Move.Linv;
@@ -255,7 +275,7 @@ public class Solver {
 			if (m == Move.Uinv && m != impossibleMove){
 				System.out.println("MOVE - U'");
 				cubeCopy.upInv(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.upInv(this.cube.getGreenSide());
 					return Move.Uinv;
@@ -267,7 +287,7 @@ public class Solver {
 			if (m == Move.Dinv && m != impossibleMove){
 				System.out.println("MOVE - D'");
 				cubeCopy.downInv(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.downInv(this.cube.getGreenSide());
 					return Move.Dinv;
@@ -279,7 +299,7 @@ public class Solver {
 			if (m == Move.Finv && m != impossibleMove){
 				System.out.println("MOVE - F'");
 				cubeCopy.frontInv(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.frontInv(this.cube.getGreenSide());
 					return Move.Finv;
@@ -291,7 +311,7 @@ public class Solver {
 			if (m == Move.Binv && m != impossibleMove){
 				System.out.println("MOVE - B'");
 				cubeCopy.backInv(cubeCopy.getGreenSide());
-				if (heuristic( cubeCopy ).equals(cubeCopy)){
+				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
 					System.out.println("Foi Equals");
 					this.cube.backInv(this.cube.getGreenSide());
 					return Move.Binv;
@@ -305,7 +325,7 @@ public class Solver {
 		return Move.NoMove;
 	}
 	
-	private RubikCube heuristic(RubikCube cubeCopy){
+	private RubikCube crossHeuristic(RubikCube cubeCopy){
 		
 		if (countCrossPieces( this.cube) > countCrossPieces(cubeCopy) ){
 			return this.cube;
@@ -341,38 +361,14 @@ public class Solver {
 	private int countSecondLayerPieces(RubikCube cube){
 		int count = 0;
 		
-		if (cube.getGreenSide().getMatrix()[1][0].equals("w") ){
+		if (cube.getGreenSide().getMatrix()[1][0].equals("w") )
 			count++;
-//			if (cube.getWhiteSide().getMatrix()[1][0].equals("w")){
-//				possibleMoves.remove(Move.D);
-//				possibleMoves.add(0, Move.D);
-//			}
-		}
-		
-		if (cube.getGreenSide().getMatrix()[1][2].equals("w") ){
+		if (cube.getGreenSide().getMatrix()[1][2].equals("w") )
 			count++;
-//			if (cube.getWhiteSide().getMatrix()[1][2].equals("w")){
-//				possibleMoves.remove(Move.D);
-//				possibleMoves.add(0, Move.D);
-//			}
-		}
-		
-		if (cube.getBlueSide().getMatrix()[1][0].equals("w") ){
+		if (cube.getBlueSide().getMatrix()[1][0].equals("w") )
 			count++;
-//			if (cube.getWhiteSide().getMatrix()[1][0].equals("w")){
-//				possibleMoves.remove(Move.Dinv);
-//				possibleMoves.add(0, Move.Dinv);
-//			}
-		}
-		
-		if (cube.getBlueSide().getMatrix()[1][2].equals("w") ){
-			count++;
-//			if (cube.getWhiteSide().getMatrix()[1][2].equals("w")){
-//				possibleMoves.remove(Move.Dinv);
-//				possibleMoves.add(0, Move.Dinv);
-//			}
-		}
-				
+		if (cube.getBlueSide().getMatrix()[1][2].equals("w") )
+			count++;				
 		if (cube.getRedSide().getMatrix()[1][0].equals("w") )
 			count++;
 		if (cube.getRedSide().getMatrix()[1][2].equals("w") )
@@ -383,7 +379,7 @@ public class Solver {
 			count++;
 		
 		return count;
-	}	
+	}
 	
 	private boolean isCrossComplete(){
 		boolean cross = true;
@@ -400,4 +396,135 @@ public class Solver {
 		return cross;
 	}
 	
+	private Move verifyNextCrossSideMove(){
+		int crossSideCorrect = countCrossSidePieces(this.cube);
+		
+		if (crossSideCorrect == 2){
+			verifyCrossSideCase();
+			return Move.NoCrossMove;
+		}else if (crossSideCorrect == 4){
+			return Move.NoCrossMove;
+		}else{
+			
+			System.out.println("MOVE - D'");
+			cubeCopy.downInv(cubeCopy.getGreenSide());
+			if (crossSideHeuristic( cubeCopy ).equals(cubeCopy)){
+				System.out.println("good move!");
+				this.cube.downInv(this.cube.getGreenSide());
+				return Move.Dinv;
+			}else{
+				cubeCopy.down(cubeCopy.getGreenSide());
+			}
+			
+			System.out.println("MOVE - D");
+			cubeCopy.down(cubeCopy.getGreenSide());
+			if (crossSideHeuristic( cubeCopy ).equals(cubeCopy)){
+				System.out.println("good move!");
+				this.cube.down(this.cube.getGreenSide());
+				return Move.D;
+			}else{
+				cubeCopy.downInv(cubeCopy.getGreenSide());
+			}
+		}
+		return Move.NoMove;
+	}
+	
+	private void verifyCrossSideCase() {
+		if (cube.getRedSide().getMatrix()[2][1].equals("r") && cube.getOrangeSide().getMatrix()[2][1].equals("o")){
+			oppositeCrossSide("r");
+		}else if (cube.getGreenSide().getMatrix()[2][1].equals("g") && cube.getBlueSide().getMatrix()[2][1].equals("b")){
+			oppositeCrossSide("g");
+		}else{
+//			neighborCrossSide();
+		}
+	}
+
+	private void neighborCrossSide() {
+		//TODO
+		
+	}
+
+	private void oppositeCrossSide(String face) {
+		if(face.equals("r")){
+			cube.right(cube.getGreenSide());
+			cube.leftInv(cube.getGreenSide());
+			cube.downInv(cube.getGreenSide());
+			cube.downInv(cube.getGreenSide());
+			cube.rightInv(cube.getGreenSide());
+			cube.left(cube.getGreenSide());
+			
+			solution += "R L' D' D' R' L ";
+		}else{
+			cube.front(cube.getGreenSide());
+			cube.backInv(cube.getGreenSide());
+			cube.downInv(cube.getGreenSide());
+			cube.downInv(cube.getGreenSide());
+			cube.frontInv(cube.getGreenSide());
+			cube.back(cube.getGreenSide());
+			
+			solution += "R L' D' D' R' L ";
+		}
+	}
+
+	private RubikCube crossSideHeuristic(RubikCube cubeCopy){
+		
+		if (countCrossSidePieces( this.cube) > countCrossSidePieces(cubeCopy) )
+			return this.cube;
+		else
+			return cubeCopy;
+	}
+
+	private int countCrossSidePieces(RubikCube cube2) {
+		int countCrossSides = 0;
+		
+		if (! cube.getGreenSide().getMatrix()[2][1].equals("g"))
+			countCrossSides++;
+		if (! cube.getBlueSide().getMatrix()[2][1].equals("b"))
+			countCrossSides++;
+		if (! cube.getRedSide().getMatrix()[2][1].equals("r"))
+			countCrossSides++;
+		if (! cube.getOrangeSide().getMatrix()[2][1].equals("o"))
+			countCrossSides++;
+		
+		return countCrossSides;
+	}
+
+	private boolean isCrossSidesComplete() {
+		boolean crossSides = true;
+		
+		if (! cube.getGreenSide().getMatrix()[2][1].equals("g"))
+			crossSides = false;
+		if (! cube.getBlueSide().getMatrix()[2][1].equals("b"))
+			crossSides = false;
+		if (! cube.getRedSide().getMatrix()[2][1].equals("r"))
+			crossSides = false;
+		if (! cube.getOrangeSide().getMatrix()[2][1].equals("o"))
+			crossSides = false;
+		
+		return crossSides;
+	}
+	
+	private void fillPossibleMoves(){
+		possibleMoves.clear();
+	
+		possibleMoves.add(Move.R);
+		possibleMoves.add(Move.L);
+		possibleMoves.add(Move.U);
+		possibleMoves.add(Move.D);
+		possibleMoves.add(Move.F);
+		possibleMoves.add(Move.B);
+		possibleMoves.add(Move.Rinv);
+		possibleMoves.add(Move.Linv);
+		possibleMoves.add(Move.Uinv);
+		possibleMoves.add(Move.Dinv);
+		possibleMoves.add(Move.Finv);
+		possibleMoves.add(Move.Binv);
+	}
+	
+	private void prepareCrossSidesPossibleMoves() {
+		impossibleMove = Move.NoMove;
+		possibleMoves.clear();
+		possibleMoves.add(Move.D);
+		possibleMoves.add(Move.Dinv);		
+	}	
 }
