@@ -4,8 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-//		TODO TIRAR o U e U' dos possiblesMOVEs na cruz
-		
+//		TODO TIRAR o U e U' dos possiblesMOVEs na cruz		
 //		RubikCube cube = Utils.shuffleCube("B R2 U2 D L2 F' R' L' F2 D U2 F U B U2 D' F' R D R' F2 R' F L' U");// INFINITO! // OK 4 moves
 //		RubikCube cube = Utils.shuffleCube("U2 F U' L' U B L' R' B2 U' L2 U' B' L R2 D U' L' B' R' D F L2 F' B2");// OK 5 moves
 //		RubikCube cube = Utils.shuffleCube("F B U L' R' U' D L2 D' R L' U' D2 F' U' L2 D' L R B2 L D' B' L' D'");// OK 8 moves
@@ -22,12 +21,19 @@ public class Main {
 		System.out.println(cube.toString());
 		System.out.println("======");
 		
-		Solver me = new Solver(cube);
-		me.solveCube();
-		System.out.println("\n" + me.getSolution());
+		CrossSolver stepOne = new CrossSolver(cube);
+		stepOne.solveCross();
 		
-//		System.out.println("======");
-//		System.out.println(cube.toString());
-//		System.out.println("======");
+		F2LSolver stepTwo = new F2LSolver(cube, stepOne.getSolution());
+		stepTwo.solveFirstTwoLayers();
+		
+		
+		System.out.println("\n" + "Cross Solved: " + stepOne.getSolution());
+		
+		System.out.println("\n" + "F2L Solved: " + stepTwo.getSolution());
+		
+		System.out.println("======");
+		System.out.println(cube.toString());
+		System.out.println("======");
 	}
 }

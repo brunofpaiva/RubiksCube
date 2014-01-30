@@ -2,7 +2,7 @@ package com.iaproject;
 
 import java.util.ArrayList;
 
-public class Solver {
+public class CrossSolver {
 	
 	RubikCube cube;
 	String solution;
@@ -11,7 +11,7 @@ public class Solver {
 	
 	RubikCube cubeCopy;
 	
-	public Solver(RubikCube cube){
+	public CrossSolver(RubikCube cube){
 		this.cube = cube;
 		this.solution = "";
 		this.impossibleMove = Move.NoMove;
@@ -36,17 +36,11 @@ public class Solver {
 		return solution;
 	}
 	
-	public void solveCube(){
-		
-		solveCross(); //Always solve a white one
-//		solveF2L();
-//		solveOLL();
-//		solvePLL();
-		
-	}
-	
+	/**
+	 * Always solve a white cross 
+	 */
 	public void solveCross(){
-		int count = 0;
+//		int count = 0;
 		Move nextMove = Move.NoMove;
 		
 		while (!isCrossComplete()){
@@ -132,12 +126,12 @@ public class Solver {
 					break;
 			}					
 			
-			count++;
-			
-			System.out.println("====== COPY ======");
-			System.out.println(cubeCopy.toString());
-			System.out.println("====== ==== ======");
-			System.out.println("count: " + count);
+//			count++;
+//			
+//			System.out.println("====== COPY ======");
+//			System.out.println(cubeCopy.toString());
+//			System.out.println("====== ==== ======");
+//			System.out.println("count: " + count);
 		}
 		
 		completeCrossSide();
@@ -417,10 +411,10 @@ public class Solver {
 		
 		System.out.println("Neighbor");
 		
-		boolean greenSide = cube.getGreenSide().getMatrix()[2][1].equals("g");
-		boolean redSide = cube.getRedSide().getMatrix()[2][1].equals("r");
-		boolean blueSide = cube.getBlueSide().getMatrix()[2][1].equals("b");
-		boolean orangeSide = cube.getOrangeSide().getMatrix()[2][1].equals("o");
+		boolean greenSide = cube.getGreenSide().getMatrix()[2][1].equals("g");//boolean that verifies if the greenSide of the cross is OK!
+		boolean redSide = cube.getRedSide().getMatrix()[2][1].equals("r");//boolean that verifies if the redSide of the cross is OK!
+		boolean blueSide = cube.getBlueSide().getMatrix()[2][1].equals("b");//boolean that verifies if the blueSide of the cross is OK!
+		boolean orangeSide = cube.getOrangeSide().getMatrix()[2][1].equals("o");//boolean that verifies if the orangeSide of the cross is OK!
 		
 		if (greenSide && redSide){ //case 1
 			cube.right(cube.getGreenSide());
