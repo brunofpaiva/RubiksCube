@@ -17,9 +17,9 @@ public class Main {
 //		RubikCube cube = Utils.shuffleCube("F' L R' F L U2 D' B' R U2 R2 B2 L' U2 F R2 L2 B L D R2 L' U2 R2 D");// OK 6 moves
 		RubikCube cube = Utils.shuffleCube("R2 U F2 B2 R' D2 L' B L R' F' D U R' U B D2 B' F2 L' F2 R2 L2 F B");//
 				
-		System.out.println("======");
+		System.out.println("====== SHUFFLED CUBE ======");
 		System.out.println(cube.toString());
-		System.out.println("======");
+		System.out.println("===========================");
 		
 		CrossSolver stepOne = new CrossSolver(cube);
 		stepOne.solveCross();
@@ -27,13 +27,7 @@ public class Main {
 		F2LSolver stepTwo = new F2LSolver(cube, stepOne.getSolution());
 		stepTwo.solveFirstTwoLayers();
 		
-		
-		System.out.println("\n" + "Cross Solved: " + stepOne.getSolution());
-		
+//		System.out.println("\n" + "Cross Solved: " + stepOne.getSolution());
 		System.out.println("\n" + "F2L Solved: " + stepTwo.getSolution());
-		
-		System.out.println("======");
-		System.out.println(cube.toString());
-		System.out.println("======");
 	}
 }

@@ -44,8 +44,10 @@ public class CrossSolver {
 		Move nextMove = Move.NoMove;
 		
 		while (!isCrossComplete()){
+			
+			System.out.println("\nPossible Moves: ");
 			for (Move m : possibleMoves){
-				System.out.println(m);
+				System.out.println("- " + m);
 			}
 			
 			nextMove = verifyNextCrossMove();
@@ -102,17 +104,20 @@ public class CrossSolver {
 						impossibleMove = Move.B;
 						break;
 				case NoMove: 
-						System.out.println("MOVE NOT FOUND");
+
 						if (impossibleMove != Move.D){
 						// Forced Down Move
+							System.out.println("MOVE NOT FOUND - Forced MOVE - D");
 							cubeCopy.down(cubeCopy.getGreenSide());
 							solution += "D ";
 							this.cube.down(this.cube.getGreenSide());
 							
 							possibleMoves.remove(Move.Dinv);
 							impossibleMove = Move.Dinv;
+							
 						}else{
 						// Forced Down Move
+							System.out.println("MOVE NOT FOUND - Forced MOVE - D'");
 							cubeCopy.downInv(cubeCopy.getGreenSide());
 							solution += "D' ";
 							this.cube.downInv(this.cube.getGreenSide());
@@ -138,13 +143,14 @@ public class CrossSolver {
 	}
 
 	private Move verifyNextCrossMove(){
+		System.out.println("\n");
 		for (Move m : possibleMoves){
 			
 			if (m == Move.R && m != impossibleMove){
-				System.out.println("MOVE - R");
+				System.out.println("testing: MOVE - R");
 				cubeCopy.right(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.right(this.cube.getGreenSide());
 					return Move.R;
 				}else{
@@ -153,10 +159,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.L && m != impossibleMove){
-				System.out.println("MOVE - L");
+				System.out.println("testing: MOVE - L");
 				cubeCopy.left(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.left(this.cube.getGreenSide());
 					return Move.L;
 				}else{
@@ -165,10 +171,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.U && m != impossibleMove){
-				System.out.println("MOVE - U");
+				System.out.println("testing: MOVE - U");
 				cubeCopy.up(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.up(this.cube.getGreenSide());
 					return Move.U;
 				}else{
@@ -177,10 +183,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.D && m != impossibleMove){
-				System.out.println("MOVE - D");
+				System.out.println("testing: MOVE - D");
 				cubeCopy.down(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.down(this.cube.getGreenSide());
 					return Move.D;
 				}else{
@@ -189,10 +195,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.F && m != impossibleMove){
-				System.out.println("MOVE - F");
+				System.out.println("testing: MOVE - F");
 				cubeCopy.front(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.front(this.cube.getGreenSide());
 					return Move.F;
 				}else{
@@ -201,10 +207,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.B && m != impossibleMove){
-				System.out.println("MOVE - B");
+				System.out.println("testing: MOVE - B");
 				cubeCopy.back(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.back(this.cube.getGreenSide());
 					return Move.B;
 				}else{
@@ -213,10 +219,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.Rinv && m != impossibleMove){
-				System.out.println("MOVE - R'");
+				System.out.println("testing: MOVE - R'");
 				cubeCopy.rightInv(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.rightInv(this.cube.getGreenSide());
 					return Move.Rinv;
 				}else{
@@ -225,10 +231,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.Linv && m != impossibleMove){
-				System.out.println("MOVE - L'");
+				System.out.println("testing: MOVE - L'");
 				cubeCopy.leftInv(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.leftInv(this.cube.getGreenSide());
 					return Move.Linv;
 				}else{
@@ -237,10 +243,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.Uinv && m != impossibleMove){
-				System.out.println("MOVE - U'");
+				System.out.println("testing: MOVE - U'");
 				cubeCopy.upInv(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.upInv(this.cube.getGreenSide());
 					return Move.Uinv;
 				}else{
@@ -249,10 +255,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.Dinv && m != impossibleMove){
-				System.out.println("MOVE - D'");
+				System.out.println("testing: MOVE - D'");
 				cubeCopy.downInv(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.downInv(this.cube.getGreenSide());
 					return Move.Dinv;
 				}else{
@@ -261,10 +267,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.Finv && m != impossibleMove){
-				System.out.println("MOVE - F'");
+				System.out.println("testing: MOVE - F'");
 				cubeCopy.frontInv(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.frontInv(this.cube.getGreenSide());
 					return Move.Finv;
 				}else{
@@ -273,10 +279,10 @@ public class CrossSolver {
 			}
 			
 			if (m == Move.Binv && m != impossibleMove){
-				System.out.println("MOVE - B'");
+				System.out.println("testing: MOVE - B'");
 				cubeCopy.backInv(cubeCopy.getGreenSide());
 				if (crossHeuristic( cubeCopy ).equals(cubeCopy)){
-					System.out.println("Foi Equals");
+					System.out.println("Good Move!");
 					this.cube.backInv(this.cube.getGreenSide());
 					return Move.Binv;
 				}else{
@@ -409,7 +415,7 @@ public class CrossSolver {
 	 */
 	private void neighborCrossSide() {
 		
-		System.out.println("Neighbor");
+		System.out.println("Case - Neighbor");
 		
 		boolean greenSide = cube.getGreenSide().getMatrix()[2][1].equals("g");//boolean that verifies if the greenSide of the cross is OK!
 		boolean redSide = cube.getRedSide().getMatrix()[2][1].equals("r");//boolean that verifies if the redSide of the cross is OK!
@@ -464,6 +470,9 @@ public class CrossSolver {
 	}
 
 	private void oppositeCrossSide(String face) {
+		
+		System.out.println("Case - Opposite");
+		
 		if(face.equals("r")){
 			cube.right(cube.getGreenSide());
 			cube.leftInv(cube.getGreenSide());
