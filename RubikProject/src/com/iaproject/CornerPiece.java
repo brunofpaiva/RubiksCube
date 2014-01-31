@@ -2,16 +2,25 @@ package com.iaproject;
 
 public class CornerPiece {
 	
-	private String colorH;
-	private String color1;
-	private String color2;
+	private String colorH; // Horizontal
+	private String colorL; // Left
+	private String colorR; // Right
+
+	private int position;
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
 
 	private LevelKind type;
 	
-	public CornerPiece(String colorH, String color1, String color2){
+	public CornerPiece(String colorH, String colorL, String colorR){
 		this.colorH = colorH;
-		this.color1 = color1;
-		this.color2 = color2;
+		this.colorL = colorL;
+		this.colorR = colorR;
 	}
 
 	public String getColorH() {
@@ -22,20 +31,20 @@ public class CornerPiece {
 		this.colorH = colorH;
 	}
 
-	public String getColor1() {
-		return color1;
+	public String getColorL() {
+		return colorL;
 	}
 
-	public void setColor1(String color1) {
-		this.color1 = color1;
+	public void setColorL(String colorL) {
+		this.colorL = colorL;
 	}
 
-	public String getColor2() {
-		return color2;
+	public String getColorR() {
+		return colorR;
 	}
 
-	public void setColor2(String color2) {
-		this.color2 = color2;
+	public void setColorR(String colorR) {
+		this.colorR = colorR;
 	}
 
 	public LevelKind getType() {
@@ -46,15 +55,24 @@ public class CornerPiece {
 		this.type = type;
 	}
 	
-	public boolean isThatCorner(String color1, String color2, String color3){
+	/**
+	 * Verifies if this edge is the edge that is colored like the parameters
+	 * 
+	 * @param colorL - Represents the left color of the corner
+	 * @param colorR - Represents the right color of the corner
+	 * @param color3 - Represents the horizontal color of the corner
+	 * 
+	 * @return Boolean - True if it satisfies and False if not
+	 */
+	public boolean isThatCorner(String colorL, String colorR, String color3){
 		
-		if (! (this.colorH.equals(color1) || this.colorH.equals(color2) || this.colorH.equals(color3)))
+		if (! (this.colorH.equals(colorL) || this.colorH.equals(colorR) || this.colorH.equals(color3)))
 			return false;
 		
-		if (! (this.color1.equals(color1) || this.color1.equals(color2) || this.color1.equals(color3)))
+		if (! (this.colorL.equals(colorL) || this.colorL.equals(colorR) || this.colorL.equals(color3)))
 			return false;
 		
-		if (! (this.color2.equals(color1) || this.color2.equals(color2) || this.color2.equals(color3)))
+		if (! (this.colorR.equals(colorL) || this.colorR.equals(colorR) || this.colorR.equals(color3)))
 			return false;
 			
 		return true;
@@ -66,7 +84,7 @@ public class CornerPiece {
 	 * @return Boolean answering if this corner is valid for the F2L Pair
 	 */
 	public boolean isValidToF2L(){
-		if (color1.equals("y") || color2.equals("y"))
+		if (colorH.equals("y") || colorL.equals("y") || colorR.equals("y"))
 			return false;
 		
 		return true;

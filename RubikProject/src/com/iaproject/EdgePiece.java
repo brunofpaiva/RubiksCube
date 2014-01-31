@@ -5,6 +5,7 @@ public class EdgePiece {
 	private String color1;
 	private String color2;
 	
+	private int position;
 	private LevelKind type;
 	
 	public EdgePiece(String color1, String color2){
@@ -28,12 +29,40 @@ public class EdgePiece {
 		this.color2 = color2;
 	}
 	
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	
 	public LevelKind getType() {
 		return type;
 	}
 
 	public void setType(LevelKind type) {
 		this.type = type;
+	}
+	
+	/**
+	 * Verifies if this edge is the edge that is colored like the parameters
+	 *  
+	 * @param color1 - Represents one color of the edge
+	 * @param color2 - Represents the other color of the edge
+	 * 
+	 * @return Boolean - True if it satisfies and False if not
+	 */
+	public boolean isThatEdge(String color1, String color2){
+		
+		if (! (this.color1.equals(color1) || this.color1.equals(color2)))
+			return false;
+		
+		if (! (this.color2.equals(color1) || this.color2.equals(color2)))
+			return false;
+			
+		return true;
 	}
 
 	/**
@@ -46,6 +75,5 @@ public class EdgePiece {
 			return false;
 		
 		return true;
-	}
-	
+	}	
 }
