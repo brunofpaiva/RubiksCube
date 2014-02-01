@@ -3,7 +3,6 @@ package com.iaproject;
 public class Face {
 
 	private String[][] matrix;
-	private String center;
 	
 	private Face Top;
 	private Face Back;
@@ -11,10 +10,8 @@ public class Face {
 	private Face Right;
 	private Face Left;	
 	
-	public Face(String center){
+	public Face(){
 		this.matrix = new String[2][2];
-		this.center = center;
-		setCenter();
 	}
 	
 	public void setMatrix(String[][] matrix){
@@ -25,12 +22,8 @@ public class Face {
 		return this.matrix;
 	}
 	
-	private void setCenter(){
-		this.matrix[1][1] = this.center;
-	}
-	
 	public String getCenter(){
-		return this.center;
+		return this.matrix[1][1];
 	}
 	
 	public Face getTop() {

@@ -5,12 +5,12 @@ public class Utils {
 	public static RubikCube shuffleCube(String scramble){
 		RubikCube cube = new RubikCube();
 		
-		Face whiteSide = new Face("w"); 
-		Face yellowSide = new Face("y");
-		Face greenSide = new Face("g");
-		Face blueSide = new Face("b");
-		Face orangeSide = new Face("o");
-		Face redSide = new Face("r");
+		Face whiteSide = new Face(); 
+		Face yellowSide = new Face();
+		Face greenSide = new Face();
+		Face blueSide = new Face();
+		Face orangeSide = new Face();
+		Face redSide = new Face();
 		
 		whiteSide.setMatrix(new String[][] {{"w", "w", "w"},{"w", "w", "w"},{"w", "w", "w"}});
 		yellowSide.setMatrix(new String[][] {{"y", "y", "y"},{"y", "y", "y"},{"y", "y", "y"}});

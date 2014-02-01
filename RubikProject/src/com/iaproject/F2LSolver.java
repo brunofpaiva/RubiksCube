@@ -12,7 +12,7 @@ public class F2LSolver {
 	private final int FIRST_PAIR = 1; // Green and Red
 	private final int SECOND_PAIR = 2; // Green and Orange
 	private final int THIRD_PAIR = 3; // Orange and Blue
-//	private final int FOURTH_PAIR = 4; // Blue and Red
+	private final int FOURTH_PAIR = 4; // Blue and Red
 	
 	public F2LSolver(RubikCube cube, String solution) {
 		this.cube = cube;
@@ -28,18 +28,14 @@ public class F2LSolver {
 	public void solveFirstTwoLayers() {
 		int pairNumber = 1;
 		
-		while (pairNumber <= 3){
-			
-			System.out.println("====== CUBE ======");
-			System.out.println(cube.toString());
-			System.out.println("====== ==== ======");
+		while (pairNumber <= 4){
 			
 			solveCorner(pairNumber);
 			pairNumber++;
 			
-			System.out.println("====== CUBE ======");
-			System.out.println(cube.toString());
-			System.out.println("====== ==== ======");
+//			System.out.println("====== CUBE ======");
+//			System.out.println(cube.toString());
+//			System.out.println("====== ==== ======");
 		}
 	}
 	
@@ -72,6 +68,14 @@ public class F2LSolver {
 				edge = correctThirdEdge();
 				solveF2LPair(corner, edge);
 				break;
+				
+			case FOURTH_PAIR:
+				fillCorners();
+				corner = correctFourthCorner();
+				fillEdges();
+				edge = correctFourthEdge();
+				solveF2LPair(corner, edge);
+				break;				
 				
 			default:
 				break;
@@ -200,7 +204,7 @@ public class F2LSolver {
 				}else{ //LevelKind.BOTTOM
 					if(i == 3){ // OK
 						corner.setPosition(3);
-						System.out.println("\nPosition of Third Corner after correction: 2");
+						System.out.println("\nPosition of Third Corner after correction: 3");
 
 					}else{ //i == 4
 						cube.left(cube.getGreenSide());
@@ -218,6 +222,40 @@ public class F2LSolver {
 					}
 				}
 				System.out.println("Retornou o corner3");
+				return corner;
+			}
+		}
+		return null;
+	}
+	
+	private CornerPiece correctFourthCorner() {
+		int i = 0;
+		for (CornerPiece corner : corners){
+			i++;
+			if (corner.isThatCorner("w", "r", "b")){
+				
+				System.out.println("\nPosition of Fourth Corner before correction: " + i);
+				if (corner.getType() == LevelKind.UP){
+					if (i == 6){
+						cube.upInv(cube.getGreenSide());
+						solution += "U' ";
+					}else if (i == 7){
+						cube.up(cube.getGreenSide());
+						cube.up(cube.getGreenSide());
+						solution += "U U ";
+						
+					}else if (i == 8){
+						cube.up(cube.getGreenSide());
+						solution += "U ";
+					}
+					corner.setPosition(5);
+					System.out.println("\nPosition of Fourth Corner after correction: 5");
+					
+				}else{ //LevelKind.BOTTOM Only remains the correct place
+					corner.setPosition(4);
+					System.out.println("\nPosition of Fourth Corner after correction: 4");
+				}
+				System.out.println("Retornou o corner4");
 				return corner;
 			}
 		}
@@ -351,6 +389,24 @@ public class F2LSolver {
 				return edge;
 			}
 		}
+		return null;
+	}
+	
+	private EdgePiece correctFourthEdge(/*receive the corner pair*/) {
+		int i = 0;
+		for (EdgePiece edge : edges){
+			i++;
+			if (edge.isThatEdge("b", "r")){
+				System.out.println("\nPositions of Third Edge before correction: " + i);
+				//LevelKind.BOTTOM - only remains the correct place
+				//LevelKind.UP - all UP places is correct except when the corner is already correct (pos 4)
+				System.out.println("\nPositions of Third Edge after correction: " + i);
+				edge.setPosition(i);					
+				
+				System.out.println("Retornou o edge4\n");
+				return edge;
+			}
+		}		
 		return null;
 	}
 
@@ -493,24 +549,21 @@ public class F2LSolver {
 	}
 	
 	private void solveF2LPair(CornerPiece corner, EdgePiece edge){
-		
 		System.out.println("Finding The F2L Case!\ncornerPos: "+corner.getPosition()+"\nedgePos: "+edge.getPosition());
+//		System.out.println("CornerH: " +corner.getColorH());
+//		System.out.println("EdgeL: " + edge.getColor2());		
 		
-		// CASE F2L 1
+		// CASE F2L 1 - First Pair of that scrambe
 		if ( (corner.getPosition() == 8 && edge.getPosition() == 7) && // Seeing the Position
 			 (corner.getColorH().equals(edge.getColor1())) ){		   // Comparing orientation the Orientation    
 			cube.up(cube.getGreenSide());
 			cube.front(cube.getGreenSide());
 			cube.upInv(cube.getGreenSide());
 			cube.frontInv(cube.getGreenSide());
-			solution += "U F U' F' ";
+			solution += "U F U' F' \\ ";
 		}
 		
-		
-		System.out.println("CornerH: " +corner.getColorH());
-		System.out.println("EdgeL: " + edge.getColor2());
-		
-		// CASE F2L 17
+		// CASE F2L 17 - Second Pair of that scramble
 		if ( (corner.getPosition() == 7 && edge.getPosition() == 6) &&
 			 (corner.getColorH().equals("w")) && (corner.getColorL().equals(edge.getColor2())) ){
 			cube.right(cube.getGreenSide());
@@ -521,15 +574,12 @@ public class F2LSolver {
 			cube.right(cube.getGreenSide());
 			cube.up(cube.getGreenSide());
 			cube.rightInv(cube.getGreenSide());
-			solution += "R U U R' U' R U R' ";
+			solution += "R U U R' U' R U R' \\ ";
 		}
 		
-		// CASE F2L 33		
-// TODO Tem algo errado nesse caso com relação ao edge		
+		// CASE F2L 33 - Third Pair of that scramble
 		if ( (corner.getPosition() == 6 && edge.getPosition() == 3) &&
-			 (corner.getColorH().equals(edge.getColor2())) ){
-			System.out.println("FUNFOU!");
-			
+			 (corner.getColorH().equals(edge.getColor2())) ){			
 			cube.upInv(cube.getGreenSide());
 			cube.back(cube.getGreenSide());
 			cube.upInv(cube.getGreenSide());
@@ -540,9 +590,24 @@ public class F2LSolver {
 			cube.upInv(cube.getGreenSide());
 			cube.backInv(cube.getGreenSide());
 			
-			solution += "U' B U' B' U U B U' B' ";
-			
+			solution += "U' B U' B' U U B U' B' \\ ";
 		}
 		
+		// CASE F2L 11 - Fourth Pair of that scramble
+		if ( (corner.getPosition() == 5 && edge.getPosition() == 8) &&
+			 (corner.getColorH().equals(edge.getColor2())) ) {
+			cube.back(cube.getGreenSide());
+			cube.up(cube.getGreenSide());
+			cube.up(cube.getGreenSide());
+			cube.back(cube.getGreenSide());
+			cube.back(cube.getGreenSide());
+			cube.upInv(cube.getGreenSide());
+			cube.back(cube.getGreenSide());
+			cube.back(cube.getGreenSide());
+			cube.upInv(cube.getGreenSide());
+			cube.backInv(cube.getGreenSide());
+			
+			solution += "B U U B B U' B B U' B' \\ ";
+		}
 	}	
 }
