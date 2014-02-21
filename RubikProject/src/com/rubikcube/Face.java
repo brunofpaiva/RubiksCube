@@ -1,4 +1,4 @@
-package com.iaproject;
+package com.rubikcube;
 
 public class Face {
 

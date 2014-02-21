@@ -1,5 +1,8 @@
 package com.iaproject;
 
+import com.rubikcube.Face;
+import com.rubikcube.RubikCube;
+
 public class Utils {
 	
 	public static RubikCube shuffleCube(String scramble){

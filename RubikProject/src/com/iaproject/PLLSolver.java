@@ -1,5 +1,7 @@
 package com.iaproject;
 
+import com.rubikcube.RubikCube;
+
 public class PLLSolver {
 	
 	private RubikCube cube;

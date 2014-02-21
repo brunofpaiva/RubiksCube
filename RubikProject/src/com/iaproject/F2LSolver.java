@@ -2,6 +2,8 @@ package com.iaproject;
 
 import java.util.ArrayList;
 
+import com.rubikcube.RubikCube;
+
 public class F2LSolver {
 	
 	private RubikCube cube;
