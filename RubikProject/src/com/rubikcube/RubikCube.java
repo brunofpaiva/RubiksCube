@@ -490,8 +490,6 @@ public class RubikCube {
 		greenSide.setLeft(redSide);
 		greenSide.setRight(orangeSide);
 		
-		System.out.println("Esta aqui");
-		
 		//Comparing Green Side
 		for (int i = 0; i <= 2; i++){
 			for (int j = 0; j <= 2; j++){
